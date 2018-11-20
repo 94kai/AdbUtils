@@ -81,7 +81,7 @@ public class Main {
         createCommonButton("摇晃手机", new Runnable() {
             @Override
             public void run() {
-                executeShell("adb shell input keyevent 82");
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb shell input keyevent 82");
             }
         });
 
@@ -96,8 +96,8 @@ public class Main {
             @Override
             public void run() {
                 executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb push /Users/xuekai1/project/asprojects/bundle-search/application/build/outputs/apk/application-debug.apk /sdcard/aura/lib/libcom.jd.lib.search.so");
-                executeShell("adb shell am force-stop  com.jingdong.app.mall");
-                executeShell("adb shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity");
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb shell am force-stop  com.jingdong.app.mall");
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity");
             }
         });
 
@@ -105,11 +105,17 @@ public class Main {
             @Override
             public void run() {
                 executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb push /Users/xuekai1/project/asprojects/bundle-search/application/build/outputs/apk/application-debug.apk /sdcard/aura/lib/libcom.jd.lib.search.so");
-                executeShell("adb shell am force-stop  com.jingdong.app.mall");
-                executeShell("adb shell am start -n com.jingdong.app.mall/com.jd.lib.search.view.Activity.ProductListActivity --es keyWord iphone --ei sortKey -2");
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb shell am force-stop  com.jingdong.app.mall");
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb shell am start -n com.jingdong.app.mall/com.jd.lib.search.view.Activity.ProductListActivity --es keyWord iphone --ei sortKey -2");
             }
         });
 
+        createCommonButton("金立连接rn", new Runnable() {
+            @Override
+            public void run() {
+                executeShell("/Users/xuekai1/Library/Android/sdk/platform-tools/adb -s 79KFPJLNY5OJUCSC reverse tcp:8081 tcp:8081");
+            }
+        });
 
 
         createCommonButton("清空控制台", new Runnable() {
