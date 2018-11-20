@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -112,6 +110,8 @@ public class Main {
             }
         });
 
+
+
         createCommonButton("清空控制台", new Runnable() {
             @Override
             public void run() {
@@ -145,11 +145,18 @@ public class Main {
         List<String> processList = new ArrayList<String>();
         try {
             process = Runtime.getRuntime().exec(shell);
+
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader input1 = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line = "";
+            String line1 = "";
             while ((line = input.readLine()) != null) {
                 processList.add(line);
             }
+            while ((line1 = input1.readLine()) != null) {
+                processList.add(line1);
+            }
+
             input.close();
         } catch (IOException e) {
             e.printStackTrace();
