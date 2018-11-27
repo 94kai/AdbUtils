@@ -24,21 +24,32 @@ public class Utils {
 
 
     public static String readStringFromFile(String path) throws Exception {
-        StringBuilder buffer = new StringBuilder();
-        InputStream is = new FileInputStream(path);
-        String line; // 用来保存每行读取的内容
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        line = reader.readLine(); // 读取第一行
-        while (line != null) { // 如果 line 为空说明读完了
-            buffer.append(line); // 将读到的内容添加到 buffer 中
-            buffer.append("\n"); // 添加换行符
-            line = reader.readLine(); // 读取下一行
+
+
+        File file = new File(path);
+        if (file.exists()) {
+            try {
+                StringBuilder buffer = new StringBuilder();
+                InputStream is = new FileInputStream(path);
+                String line; // 用来保存每行读取的内容
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                line = reader.readLine(); // 读取第一行
+                while (line != null) { // 如果 line 为空说明读完了
+                    buffer.append(line); // 将读到的内容添加到 buffer 中
+                    buffer.append("\n"); // 添加换行符
+                    line = reader.readLine(); // 读取下一行
+                }
+                return buffer.toString();
+
+            } catch (Exception e) {
+            }
         }
-        return buffer.toString();
+        return "";
+
     }
 
     public static void executeShell(String adb, String device, String shell) {
-        addText("adb " + shell,Color.BLUE);
+        addText("adb " + shell, Color.BLUE);
 
         shell = adb + device + shell;
         Process process = null;
@@ -65,16 +76,16 @@ public class Utils {
         }
 
         for (String line : processList) {
-            addText(line,Color.black);
+            addText(line, Color.black);
             System.out.println(line);
         }
         for (String line : processListError) {
-            addText(line,Color.red);
+            addText(line, Color.red);
             System.out.println(line);
         }
     }
 
-    public static void addText(String text,Color foreground) {
+    public static void addText(String text, Color foreground) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
         String string = simpleDateFormat.format(new Date()) + text + "\n\n";
 

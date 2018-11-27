@@ -16,6 +16,4 @@ public class LogArea extends JScrollPane {
         JTextPane logPan = (JTextPane) getViewport().getView();
         Utils.setLogPan(logPan);
     }
-
-
 }
