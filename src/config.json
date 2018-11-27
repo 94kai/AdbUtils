@@ -1,0 +1,37 @@
+{
+  "adbPath": "/Users/xuekai1/Library/Android/sdk/platform-tools/adb",
+  "deviceList": [
+    {
+      "deviceName": "小米8",
+      "deviceId": "121b1037"
+    },
+    {
+      "deviceName": "金立",
+      "deviceId": "79KFPJLNY5OJUCSC"
+    }
+  ],
+  "adbCmdList": [
+    {
+      "funName": "安装搜索并重启",
+      "cmdArray": [
+        "push /Users/xuekai1/project/asprojects/bundle-search/application/build/outputs/apk/application-debug.apk /sdcard/aura/lib/libcom.jd.lib.search.so",
+        "shell am force-stop  com.jingdong.app.mall"
+      ],
+      "type": "adb"
+    },
+    {
+      "funName": "摇晃手机",
+      "cmdArray": [
+        "shell input keyevent 82"
+      ]
+    },{
+      "funName": "连接rn",
+      "cmdArray": [
+        "reverse tcp:8081 tcp:8081"
+      ]
+    }
+  ]
+}
+
+
+
