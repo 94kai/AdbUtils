@@ -93,6 +93,9 @@ public class OperationArea extends JPanel {
     private void initButton(JPanel parent) {
         List<Config.AdbCmd> adbCmdList = config.getAdbCmdList();
         for (Config.AdbCmd adbCmd : adbCmdList) {
+            if (adbCmd.isHide()) {
+                continue;
+            }
             JButton jButton = new Button(adbCmd.getFunName(), new Runnable() {
                 @Override
                 public void run() {

@@ -59,6 +59,15 @@ public class Config {
         private String funName;
         private List<String> cmdArray;
         private String type;
+        private boolean isHide;
+
+        public boolean isHide() {
+            return isHide;
+        }
+
+        public void setHide(boolean hide) {
+            isHide = hide;
+        }
 
         public String getFunName() {
             return funName;
