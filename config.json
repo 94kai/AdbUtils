@@ -58,21 +58,21 @@
     {
       "funName": "截屏",
       "cmdArray": [
-        "shell /system/bin/screencap -p /sdcard/screenshot.png",
-        "pull /sdcard/screenshot.png",
-        "shell rm /sdcard/screenshot.png"
+        "shell /system/bin/screencap -p /sdcard/screenshot${DATE}.png",
+        "pull /sdcard/screenshot${DATE}.png",
+        "shell rm /sdcard/screenshot${DATE}.png"
       ],
       "type": "adb"
     },
     {
-      "funName": "录制视频10s并保存到电脑",
+      "funName": "录制视频并保存到电脑",
       "cmdArray": [
-        "shell screenrecord  --time-limit 10 /sdcard/demo.mp4",
+        "shell screenrecord  --time-limit ${videoTime} /sdcard/demo.mp4",
         "pull /sdcard/demo.mp4",
         "shell rm /sdcard/demo.mp4"
       ],
       "type": "adb",
-      "isHide":true
+      "isHide":false
     },
     {
       "funName": "跑monkey",
@@ -84,6 +84,6 @@
       "type": "adb"
     }
   ],
-  "defaultVariate":"\"v1\":1,\"v2\":2"
+  "defaultVariate":"\"v1\":1,\"v2\":2,\"videoTime\":10"
 
 }

@@ -7,9 +7,13 @@ import com.xk.mutils.Utils;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 操作区
@@ -17,6 +21,7 @@ import java.util.Map;
 public class OperationArea extends JPanel {
 
 
+    private String builtIn_DATE = "DATE";
     private final Config config;
 
     private int deviceHeight = 30;
@@ -38,17 +43,17 @@ public class OperationArea extends JPanel {
         deviceListPanel.setLayout(new FlowLayout());
 
         List<Config.Device> deviceList = config.getDeviceList();
-        group = new ButtonGroup();
+        this.group = new ButtonGroup();
 
         JRadioButton nullDevice = new JRadioButton("无", true);
         nullDevice.setName("无");
         deviceListPanel.add(nullDevice);
-        group.add(nullDevice);
+        this.group.add(nullDevice);
         for (Config.Device device : deviceList) {
             JRadioButton deviceItem = new JRadioButton(device.getDeviceName());
             deviceItem.setName(device.getDeviceId());
             deviceListPanel.add(deviceItem);
-            group.add(deviceItem);
+            this.group.add(deviceItem);
         }
         deviceListPanel.setBounds(0, 0, getWidth(), deviceHeight);
 
@@ -98,13 +103,30 @@ public class OperationArea extends JPanel {
             JButton jButton = new Button(adbCmd.getFunName(), new Runnable() {
                 @Override
                 public void run() {
-                    Map<String,Object> variates = getVariates();
-
+                    Date date = new Date();
+                    Map<String, Object> variates = getVariates();
                     resetDeviceName();
                     String deviceCmd;
                     if (adbCmd.getType() == null || "adb".equals(adbCmd.getType())) {
                         List<String> cmdArray = adbCmd.getCmdArray();
                         for (String cmd : cmdArray) {
+
+//===================
+//内置关键字
+                            String dateTemp = "${" + builtIn_DATE + "}";
+                            if (cmd.contains(dateTemp)) {
+                                SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+                                String time = format.format(date);
+                                cmd = cmd.replace(dateTemp, time + "");
+                            }
+//===================
+
+                            for (String key : variates.keySet()) {
+                                String temp = "${" + key + "}";
+                                if (cmd.contains(temp)) {
+                                    cmd = cmd.replace(temp, variates.get(key) + "");
+                                }
+                            }
                             if (name.equals("无")) {
                                 deviceCmd = " ";
                             } else {
@@ -121,6 +143,7 @@ public class OperationArea extends JPanel {
 
     /**
      * 从底部变量区获取变量的map
+     *
      * @return
      */
     private Map getVariates() {
