@@ -1,18 +1,13 @@
 package com.xk.mutils;
 
 import com.alibaba.fastjson.JSON;
+import com.xk.mutils.bean.Config;
 import com.xk.mutils.view.LogArea;
 import com.xk.mutils.view.OperationArea;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
+import com.xk.mutils.view.VariateArea;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.io.File;
 
 
 public class App extends JFrame {
@@ -20,6 +15,7 @@ public class App extends JFrame {
     int windowWidth = 1000;
     int windowHeight = 600;
     int consoleY = 100;
+    int variateAreaHeight = 30;
 
     String configPath = "./config.json";
 
@@ -40,13 +36,12 @@ public class App extends JFrame {
 
             int y = getLocation().y;
             System.out.println(y);
-            LogArea logArea = new LogArea(0, consoleY, windowWidth, windowHeight - consoleY - getLocation().y);
-//            JMenuBar.HEIGHT
+            LogArea logArea = new LogArea(0, consoleY, windowWidth, windowHeight - consoleY - getLocation().y - variateAreaHeight);
             add(operationArea);
-//            File file = new File("./abc.txt");
-//            if (file.exists()) {
+            VariateArea variateArea = new VariateArea(0, logArea.getHeight()+logArea.getY(), windowWidth, variateAreaHeight,config.getDefaultVariate());
+            variateArea.setBackground(Color.green);
             add(logArea);
-//            }
+            add(variateArea);
 
         } catch (Exception e) {
             e.printStackTrace();

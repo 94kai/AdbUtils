@@ -1,4 +1,4 @@
-package com.xk.mutils;
+package com.xk.mutils.bean;
 
 import java.util.List;
 
@@ -8,7 +8,16 @@ public class Config {
 
     private List<Device> deviceList;
     private List<AdbCmd> adbCmdList;
+    private String defaultVariate;
 
+
+    public String getDefaultVariate() {
+        return defaultVariate;
+    }
+
+    public void setDefaultVariate(String defaultVariate) {
+        this.defaultVariate = defaultVariate;
+    }
 
     public String getAdbPath() {
         return adbPath;

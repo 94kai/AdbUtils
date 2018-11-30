@@ -1,6 +1,5 @@
 package com.xk.mutils.view;
 
-import com.xk.mutils.Config;
 import com.xk.mutils.Utils;
 
 import javax.swing.*;

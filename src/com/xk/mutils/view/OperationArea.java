@@ -1,16 +1,15 @@
 package com.xk.mutils.view;
 
-import com.xk.mutils.Config;
+import com.alibaba.fastjson.JSON;
+import com.xk.mutils.bean.Config;
 import com.xk.mutils.Utils;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.time.temporal.JulianFields;
+import java.lang.reflect.Field;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 操作区
@@ -99,6 +98,8 @@ public class OperationArea extends JPanel {
             JButton jButton = new Button(adbCmd.getFunName(), new Runnable() {
                 @Override
                 public void run() {
+                    Map<String,Object> variates = getVariates();
+
                     resetDeviceName();
                     String deviceCmd;
                     if (adbCmd.getType() == null || "adb".equals(adbCmd.getType())) {
@@ -116,5 +117,27 @@ public class OperationArea extends JPanel {
             });
             parent.add(jButton);
         }
+    }
+
+    /**
+     * 从底部变量区获取变量的map
+     * @return
+     */
+    private Map getVariates() {
+        try {
+
+            String variateAreaJson = Utils.getVariateAreaJson();
+            String json = "{" + variateAreaJson + "}";
+            Object parse = JSON.parse(json);
+            Field map = parse.getClass().getDeclaredField("map");
+
+            map.setAccessible(true);
+            Map content = (Map) map.get(parse);
+
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

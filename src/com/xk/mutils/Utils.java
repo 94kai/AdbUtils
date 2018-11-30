@@ -16,6 +16,7 @@ public class Utils {
 
     private static JTextArea log;
     private static JTextPane logPan;
+    private static JTextArea variateArea;
 
 
     public static void setLog(JTextArea log) {
@@ -23,9 +24,15 @@ public class Utils {
     }
 
 
+    public static String getVariateAreaJson() {
+        return variateArea.getText();
+    }
+
     public static String readStringFromFile(String path) throws Exception {
 
 
+//        File file = new File("./");
+//        System.out.println(file.getAbsolutePath());
         File file = new File(path);
         if (file.exists()) {
             try {
@@ -109,5 +116,9 @@ public class Utils {
 
     public static void setLogPan(JTextPane logPan) {
         Utils.logPan = logPan;
+    }
+
+    public static void setVariateArea(JTextArea textArea) {
+        Utils.variateArea = textArea;
     }
 }
