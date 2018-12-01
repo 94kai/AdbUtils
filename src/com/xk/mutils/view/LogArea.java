@@ -10,9 +10,8 @@ import java.awt.*;
  */
 public class LogArea extends JScrollPane {
 
-    public LogArea(int x, int y, int width, int height) throws HeadlessException {
+    public LogArea() throws HeadlessException {
         super(new JTextPane());
-        setBounds(x, y, width, height);
         JTextPane logPan = (JTextPane) getViewport().getView();
         Utils.setLogPan(logPan);
     }

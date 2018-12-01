@@ -118,7 +118,5 @@ public class Utils {
         Utils.logPan = logPan;
     }
 
-    public static void setVariateArea(JTextArea textArea) {
-        Utils.variateArea = textArea;
-    }
+
 }
