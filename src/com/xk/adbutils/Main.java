@@ -1,14 +1,6 @@
-package com.xk.mutils;
+package com.xk.adbutils;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * TODO:1.指定配置文件，通过配置文件配置adb路径、设备列表、命令列表

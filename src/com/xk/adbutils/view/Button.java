@@ -1,14 +1,13 @@
-package com.xk.mutils.view;
+package com.xk.adbutils.view;
 
-import com.xk.mutils.Utils;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+
 public class Button extends JButton {
-    public Button(String text,Runnable runnable) {
+    public Button(String text, Runnable runnable) {
         setText(text);
         addActionListener(new ActionListener() {
             @Override
@@ -16,7 +15,7 @@ public class Button extends JButton {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Utils.addText(getText(),Color.RED);
+                        LogArea.addText(getText(), Color.RED);
                         runnable.run();
                     }
                 }).start();

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MUtils.iml" filepath="$PROJECT_DIR$/MUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AdbUtils.iml" filepath="$PROJECT_DIR$/AdbUtils.iml" />
     </modules>
   </component>
 </project>

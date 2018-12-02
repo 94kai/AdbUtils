@@ -2,7 +2,7 @@
   <artifact type="jar" name="MUtils:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/MUtils_jar</output-path>
     <root id="archive" name="MUtils.jar">
-      <element id="module-output" name="MUtils" />
+      <element id="module-output" name="AdbUtils" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/fastjson-1.2.52.jar" path-in-jar="/" />
     </root>
   </artifact>

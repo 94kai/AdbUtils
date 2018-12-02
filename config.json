@@ -1,5 +1,4 @@
 {
-  "adbPath": "/Users/xuekai1/Library/Android/sdk/platform-tools/adb",
   "deviceList": [
     {
       "deviceName": "小米8",
@@ -8,6 +7,10 @@
     {
       "deviceName": "金立",
       "deviceId": "79KFPJLNY5OJUCSC"
+    },
+    {
+      "deviceName": "模拟器1号",
+      "deviceId": "emulator-5558"
     }
   ],
   "adbCmdList": [
@@ -38,7 +41,7 @@
         "shell am force-stop  com.jingdong.app.mall"
       ],
       "type": "adb",
-      "isHide":true
+      "isHide": true
     },
     {
       "funName": "卸载京东app",
@@ -72,7 +75,7 @@
         "shell rm /sdcard/demo.mp4"
       ],
       "type": "adb",
-      "isHide":false
+      "isHide": false
     },
     {
       "funName": "跑monkey",
@@ -84,6 +87,10 @@
       "type": "adb"
     }
   ],
-  "defaultVariate":"\"v1\":1,\"v2\":2,\"videoTime\":10"
-
+  "variateList": {
+    "adbPath": "/Users/xuekai/Library/Android/sdk/platform-tools/adb",
+    "apkPath": "/Users/xuekai/projects/idea_workspace/MUtils",
+    "videoTime":"10"
+  },
+  "forbidModifyVariateList":["adbPath"]
 }

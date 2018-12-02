@@ -1,8 +1,7 @@
-package com.xk.mutils;
+package com.xk.adbutils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 /**
  * 上面的区域

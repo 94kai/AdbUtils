@@ -1,4 +1,4 @@
-package com.xk.mutils.bean;
+package com.xk.adbutils.bean;
 
 public class Variate {
 

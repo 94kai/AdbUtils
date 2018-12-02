@@ -1,27 +1,34 @@
-package com.xk.mutils.view;
+package com.xk.adbutils.view;
 
-import com.xk.mutils.Utils;
+import com.xk.adbutils.ShellUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Vector;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 /**
  * 安装apk的工作区
  */
-public class InstallAppArea extends JPanel {
+public class InstallAppArea extends MJpanel {
 
     private JList sourceList;
     private ArrayList<File> listFiles;
 
     @Override
-    public void setBounds(int x, int y, int width, int height) {
-        super.setBounds(x, y, width, height);
-
+    protected void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel jLabel = new JLabel("安装apk：");
@@ -33,6 +40,11 @@ public class InstallAppArea extends JPanel {
 
 
         JPanel btnContainer = new JPanel();
+        btnContainer.setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+
 
         JButton refresh = new JButton("刷新");
         refresh.addActionListener(new ActionListener() {
@@ -41,6 +53,7 @@ public class InstallAppArea extends JPanel {
                 refreshApks();
             }
         });
+
 
         JButton install = new JButton("安装");
         install.addActionListener(new ActionListener() {
@@ -52,16 +65,31 @@ public class InstallAppArea extends JPanel {
 
         });
         refreshApks();
-
-        btnContainer.add(refresh);
-        btnContainer.add(install);
+        btnContainer.add(refresh, gridBagConstraints);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        btnContainer.add(install, gridBagConstraints);
         add(btnContainer);
+    }
+
+    @Override
+    protected void onConfigLoaded() {
+
     }
 
     private void installApk() {
         int selectedIndex = sourceList.getSelectedIndex();
+        if (selectedIndex == -1) {
+            LogArea.addText("ERROR!!! 请选择要安装的apk！！！", Color.RED);
+            return;
+        }
         File file = listFiles.get(selectedIndex);
-        Utils.executeShell("adb", "-s vvv", "install " + file.getAbsolutePath());
+        String defaultUninstallPackageName = config.getVariate("uninstallPackageName");
+        if (defaultUninstallPackageName == null || defaultUninstallPackageName.equals("")) {
+            defaultUninstallPackageName="com.jingdong.xx";
+        }
+        ShellUtils.executeShellWithLog("uninstall " + defaultUninstallPackageName);
+        ShellUtils.executeShellWithLog("install -r " + file.getAbsolutePath());
     }
 
 

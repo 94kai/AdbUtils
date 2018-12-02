@@ -1,30 +1,41 @@
-package com.xk.mutils.bean;
+package com.xk.adbutils.bean;
 
 import java.util.List;
+import java.util.Map;
 
 public class Config {
-    private String adbPath;
 
-
+    public static Config instance;
     private List<Device> deviceList;
     private List<AdbCmd> adbCmdList;
-    private String defaultVariate;
+    private List<String> forbidModifyVariateList;
+    private Map<String, String> variateList;
 
 
-    public String getDefaultVariate() {
-        return defaultVariate;
+
+    public static void setInstance(Config instance) {
+        Config.instance = instance;
     }
 
-    public void setDefaultVariate(String defaultVariate) {
-        this.defaultVariate = defaultVariate;
+    public Map<String, String> getVariateList() {
+        return variateList;
     }
 
-    public String getAdbPath() {
-        return adbPath;
+
+    public static Config getInstance() {
+        return instance;
     }
 
-    public void setAdbPath(String adbPath) {
-        this.adbPath = adbPath;
+    public List<String> getForbidModifyVariateList() {
+        return forbidModifyVariateList;
+    }
+
+    public void setForbidModifyVariateList(List<String> forbidModifyVariateList) {
+        this.forbidModifyVariateList = forbidModifyVariateList;
+    }
+
+    public void setVariateList(Map<String, String> variateList) {
+        this.variateList = variateList;
     }
 
     public List<Device> getDeviceList() {
@@ -101,5 +112,15 @@ public class Config {
         public void setType(String type) {
             this.type = type;
         }
+    }
+
+
+//=========================一些封装的方法
+
+    public String getVariate(String key) {
+        if (variateList != null) {
+            return variateList.get(key);
+        }
+        return null;
     }
 }
