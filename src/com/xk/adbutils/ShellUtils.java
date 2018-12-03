@@ -65,6 +65,7 @@ public class ShellUtils {
             errorStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+            LogArea.addText(e.getMessage(),Color.red);
         }
 
         ShellResult shellResult = new ShellResult();

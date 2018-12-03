@@ -37,13 +37,11 @@ public class CustomAdbArea extends MJpanel {
                 @Override
                 public void run() {
                     Date date = new Date();
-                    if (adbCmd.getType() == null || "adb".equals(adbCmd.getType())) {
-                        List<String> cmdArray = adbCmd.getCmdArray();
-                        for (String cmd : cmdArray) {
-                            cmd = replaceInternalVariate(cmd,date);
-                            cmd = replaceVariate(cmd);
-                            ShellUtils.executeShell(cmd);
-                        }
+                    List<String> cmdArray = adbCmd.getCmdArray();
+                    for (String cmd : cmdArray) {
+                        cmd = replaceInternalVariate(cmd, date);
+                        cmd = replaceVariate(cmd);
+                        ShellUtils.executeShell(cmd);
                     }
                 }
             });
@@ -96,7 +94,7 @@ public class CustomAdbArea extends MJpanel {
         JButton jButton = new Button("帮助", new Runnable() {
             @Override
             public void run() {
-                LogArea.addText(Constant.help,Color.BLUE);
+                LogArea.addText(Constant.help, Color.BLUE);
             }
         });
         add(jButton);

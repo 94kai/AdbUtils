@@ -72,7 +72,6 @@ public class SelectDeviceArea extends MJpanel {
         if (config != null) {
             List<Config.Device> deviceList = config.getDeviceList();
             for (String deviceId : devicesId) {
-                System.out.println(deviceId);
                 boolean hasAdd = false;
                 for (Config.Device device : deviceList) {
                     if (device.getDeviceId().equals(deviceId)) {

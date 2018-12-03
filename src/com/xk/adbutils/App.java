@@ -38,7 +38,7 @@ public class App extends JFrame {
         setResizable(false);
         String json = null;
         try {
-            json = Utils.readStringFromFile(configPath);
+            json = FileUtils.readStringFromFile(configPath);
             Config config = JSON.parseObject(json, Config.class);
             Config.setInstance(config);
             operationArea.setConfig();

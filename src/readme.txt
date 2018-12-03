@@ -1,1 +1,0 @@
-type:adb  adb+device+cmd

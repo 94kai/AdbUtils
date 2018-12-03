@@ -41,15 +41,15 @@ public class VariateArea extends MJpanel {
         Map<String, String> variateList = config.getVariateList();
         List<String> hideVariateList = config.getForbidModifyVariateList();
         String[] columnName = {"key", "value"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(columnName, variateList.keySet().size() + 7){
+        DefaultTableModel defaultTableModel = new DefaultTableModel(columnName, variateList.keySet().size() + 7) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 Object key = getValueAt(row, 0);
-                if (hideVariateList.contains(key)) {
+                if (hideVariateList != null && hideVariateList.contains(key)) {
                     //该行不可编辑
                     return false;
                 }
-                return super.isCellEditable(row, column);
+                return true;
             }
         };
 

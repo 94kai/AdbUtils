@@ -83,14 +83,12 @@
         "root",
         "shell su -c 'am start -W -n com.jingdong.app.mall/com.jd.lib.search.view.Activity.SearchActivity --ei to 4'",
         "shell monkey -p com.jingdong.app.mall --throttle 0 --pct-touch 20 --pct-motion 20 --pct-trackball 20 --pct-majornav 20 --pct-appswitch 20 --ignore-timeouts --ignore-crashes --ignore-security-exceptions --monitor-native-crashes -v -v -v 10"
-      ],
-      "type": "adb"
+      ]
     }
   ],
   "variateList": {
     "adbPath": "/Users/xuekai/Library/Android/sdk/platform-tools/adb",
-    "apkPath": "/Users/xuekai/projects/idea_workspace/MUtils",
-    "videoTime":"10"
-  },
-  "forbidModifyVariateList":["adbPath"]
+    "apkPath": "/Users/xuekai1/projects/idea_workspace/MUtils",
+    "videoTime": "10"
+  }
 }

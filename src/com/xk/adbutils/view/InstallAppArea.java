@@ -1,5 +1,6 @@
 package com.xk.adbutils.view;
 
+import com.xk.adbutils.Constant;
 import com.xk.adbutils.ShellUtils;
 
 import java.awt.Color;
@@ -86,7 +87,7 @@ public class InstallAppArea extends MJpanel {
         File file = listFiles.get(selectedIndex);
         String defaultUninstallPackageName = config.getVariate("uninstallPackageName");
         if (defaultUninstallPackageName == null || defaultUninstallPackageName.equals("")) {
-            defaultUninstallPackageName="com.jingdong.xx";
+            defaultUninstallPackageName = "com.jingdong.xx";
         }
         ShellUtils.executeShellWithLog("uninstall " + defaultUninstallPackageName);
         ShellUtils.executeShellWithLog("install -r " + file.getAbsolutePath());
@@ -96,15 +97,14 @@ public class InstallAppArea extends MJpanel {
     public void refreshApks() {
 
         new Thread(new Runnable() {
-
-
             @Override
             public void run() {
-//                File customApkPathParent = new File(customApkPath.getText());
-                File customApkPathParent = new File("./");
+                String path = VariateArea.instance.getValue(Constant.KEY_APK_PATH);
+                if (path == null || "".equals(path)) {
+                    path="./";
+                }
+                File customApkPathParent = new File(path);
                 String absolutePath = customApkPathParent.getAbsolutePath();
-                absolutePath = absolutePath.substring(0, absolutePath.length() - 1);
-                System.out.println(absolutePath);
                 File file = new File(absolutePath);
                 File[] files = file.listFiles();
                 listFiles = new ArrayList<>();

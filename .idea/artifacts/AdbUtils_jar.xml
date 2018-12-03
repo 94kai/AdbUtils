@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="AdbUtils:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AdbUtils_jar</output-path>
+    <root id="root">
+      <element id="archive" name="AdbUtils.jar">
+        <element id="module-output" name="AdbUtils" />
+        <element id="extracted-dir" path="$PROJECT_DIR$/lib/fastjson-1.2.52.jar" path-in-jar="/" />
+      </element>
+    </root>
+  </artifact>
+</component>
