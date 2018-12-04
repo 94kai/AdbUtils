@@ -19,6 +19,7 @@ import javax.swing.JButton;
  */
 public class CustomAdbArea extends MJpanel {
     private String internalVariate_Date = "DATE";
+    private String internalVariate_DeviceName = "DEVICE_NAME";
 
     @Override
     protected void init() {
@@ -41,7 +42,7 @@ public class CustomAdbArea extends MJpanel {
                     for (String cmd : cmdArray) {
                         cmd = replaceInternalVariate(cmd, date);
                         cmd = replaceVariate(cmd);
-                        ShellUtils.executeShell(cmd);
+                        ShellUtils.executeShellWithLog(cmd);
                     }
                 }
             });
@@ -59,12 +60,21 @@ public class CustomAdbArea extends MJpanel {
      * @return
      */
     private String replaceInternalVariate(String cmd, Date date) {
-        String keywordTemp = "${" + internalVariate_Date + "}";
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+        String keywordDate = "${" + internalVariate_Date + "}";
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss");
         String time = format.format(date);
-        if (cmd.contains(keywordTemp)) {
-            cmd = cmd.replace(keywordTemp, time + "");
+        if (cmd.contains(keywordDate)) {
+            cmd = cmd.replace(keywordDate, time + "");
         }
+
+
+        String keywordDeviceName = "${" + internalVariate_DeviceName + "}";
+        String deviceName=SelectDeviceArea.instance.getSelectDeviceName();
+        if (cmd.contains(keywordDeviceName)) {
+            cmd = cmd.replace(keywordDeviceName, deviceName);
+        }
+
+
         return cmd;
     }
 

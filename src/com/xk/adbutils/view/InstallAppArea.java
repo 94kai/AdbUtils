@@ -2,6 +2,7 @@ package com.xk.adbutils.view;
 
 import com.xk.adbutils.Constant;
 import com.xk.adbutils.ShellUtils;
+import com.xk.adbutils.ThreadUtils;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -85,40 +86,37 @@ public class InstallAppArea extends MJpanel {
             return;
         }
         File file = listFiles.get(selectedIndex);
-        String defaultUninstallPackageName = config.getVariate("uninstallPackageName");
+        String defaultUninstallPackageName = VariateArea.instance.getValue("uninstallPackageName");
         if (defaultUninstallPackageName == null || defaultUninstallPackageName.equals("")) {
-            defaultUninstallPackageName = "com.jingdong.xx";
+            defaultUninstallPackageName = Constant.JDPackageName;
         }
         ShellUtils.executeShellWithLog("uninstall " + defaultUninstallPackageName);
         ShellUtils.executeShellWithLog("install -r " + file.getAbsolutePath());
+        if (defaultUninstallPackageName.equals(Constant.JDPackageName)) {
+            ShellUtils.executeShellWithLog("shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity");
+        }
     }
 
 
     public void refreshApks() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String path = VariateArea.instance.getValue(Constant.KEY_APK_PATH);
-                if (path == null || "".equals(path)) {
-                    path="./";
-                }
-                File customApkPathParent = new File(path);
-                String absolutePath = customApkPathParent.getAbsolutePath();
-                File file = new File(absolutePath);
-                File[] files = file.listFiles();
-                listFiles = new ArrayList<>();
-                DefaultListModel listModel = new DefaultListModel();
-                for (File file1 : files) {
-                    if (file1.getName().endsWith(".apk")) {
-                        listModel.addElement(file1.getName());
-                        listFiles.add(file1);
-                    }
-                }
-                sourceList.setModel(listModel);
+        ThreadUtils.execute(() -> {
+            String path = VariateArea.instance.getValue(Constant.KEY_APK_PATH);
+            if (path == null || "".equals(path)) {
+                path = "./";
             }
-        }).start();
-
-
+            File customApkPathParent = new File(path);
+            String absolutePath = customApkPathParent.getAbsolutePath();
+            File file = new File(absolutePath);
+            File[] files = file.listFiles();
+            listFiles = new ArrayList<>();
+            DefaultListModel listModel = new DefaultListModel();
+            for (File file1 : files) {
+                if (file1.getName().endsWith(".apk")) {
+                    listModel.addElement(file1.getName());
+                    listFiles.add(file1);
+                }
+            }
+            sourceList.setModel(listModel);
+        });
     }
 }

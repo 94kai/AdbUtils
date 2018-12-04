@@ -21,18 +21,12 @@ public class ShellUtils {
      * @param shell shell脚本，不包括adb 设备号
      */
     public static void executeShellWithLog(String shell) {
-        ShellResult shellResult = executeShell(shell);
-        String shellCmd = shellResult.getShell();
-        List<String> resultList = shellResult.getResultList();
-        List<String> errorResultList = shellResult.getErrorResultList();
-
-        LogArea.addText(shellCmd, Color.BLUE);
-        for (String line : resultList) {
-            LogArea.addText(line, Color.black);
-        }
-        for (String line : errorResultList) {
-            LogArea.addText(line, Color.red);
-        }
+        ThreadUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                executeShell(shell, true);
+            }
+        });
     }
 
     /**
@@ -41,7 +35,8 @@ public class ShellUtils {
      * @param shell shell脚本，不包括adb 设备号
      * @return 运行结果
      */
-    public static ShellResult executeShell(String shell) {
+    private static ShellResult executeShell(String shell, boolean withLog) {
+
         String adb = Config.instance.getVariate(Constant.KEY_ADB_PATH);
         String shellBlock = SelectDeviceArea.instance.getShellBlock();
         String shellCmd = adb + shellBlock + shell;
@@ -49,6 +44,11 @@ public class ShellUtils {
         List<String> resultList = new ArrayList<String>();
         List<String> errorResultList = new ArrayList<String>();
         try {
+            if (withLog) {
+                String shellCmdTemp = shellCmd.replace(adb, "adb");
+                LogArea.addText(shellCmdTemp, Color.blue);
+            }
+
             process = Runtime.getRuntime().exec(shellCmd);
 
             BufferedReader inputStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -56,20 +56,25 @@ public class ShellUtils {
             String inputLine = "";
             String errorLine = "";
             while ((inputLine = inputStream.readLine()) != null) {
+                if (withLog) {
+                    LogArea.addText(inputLine, Color.black);
+                }
                 resultList.add(inputLine);
             }
             while ((errorLine = errorStream.readLine()) != null) {
+                if (withLog) {
+                    LogArea.addText(errorLine, Color.red);
+                }
                 errorResultList.add(errorLine);
             }
             inputStream.close();
             errorStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            LogArea.addText(e.getMessage(),Color.red);
+            LogArea.addText(e.getMessage(), Color.red);
         }
 
         ShellResult shellResult = new ShellResult();
-        shellResult.setShell(shellCmd.replace(adb,"adb"));
         shellResult.setResultList(resultList);
         shellResult.setErrorResultList(errorResultList);
 
@@ -82,6 +87,6 @@ public class ShellUtils {
      * @return 运行结果
      */
     public static ShellResult listDevices() {
-        return executeShell("devices");
+        return executeShell("devices", false);
     }
 }

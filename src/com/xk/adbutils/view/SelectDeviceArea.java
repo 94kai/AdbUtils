@@ -26,6 +26,7 @@ public class SelectDeviceArea extends MJpanel {
     private List<String> devicesId;
 
     public static SelectDeviceArea instance;
+    private List<String> showList;
 
     @Override
     protected void init() {
@@ -68,7 +69,7 @@ public class SelectDeviceArea extends MJpanel {
         DefaultListModel listModel = new DefaultListModel();
         listModel.addElement("无");
         //列表显示的数据源
-        List<String> showList = new ArrayList<>();
+        showList = new ArrayList<>();
         if (config != null) {
             List<Config.Device> deviceList = config.getDeviceList();
             for (String deviceId : devicesId) {
@@ -110,6 +111,22 @@ public class SelectDeviceArea extends MJpanel {
         String deviceId = devicesId.get(selectedIndex - 1);
         return deviceId;
     }
+
+    /**
+     * 获取当前选中的设备名
+     * @return 无、没选中返回空字符串，有名字返回名字，无名字返回id
+     */
+    public String getSelectDeviceName() {
+        int selectedIndex = sourceList.getSelectedIndex();
+        if (selectedIndex == 0 || selectedIndex == -1) {
+            return "";
+        }
+        String deviceName = showList.get(selectedIndex - 1);
+        return deviceName;
+    }
+
+
+
 
     /**
      * 返回命令块（设备id部分）

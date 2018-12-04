@@ -1,5 +1,4 @@
 {
-  "注释":"该文件无用，仅供调试使用",
   "deviceList": [
     {
       "deviceName": "小米8",
@@ -20,12 +19,18 @@
       "cmdArray": [
         "push /Users/xuekai1/project/asprojects/bundle-search/application/build/outputs/apk/application-debug.apk /sdcard/aura/lib/libcom.jd.lib.search.so",
         "shell am force-stop  com.jingdong.app.mall",
-        "adb shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity"
-      ],
-      "type": "adb"
+        "shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity"
+      ]
     },
     {
-      "funName": "摇晃手机",
+      "funName": "重启",
+      "cmdArray": [
+        "shell am force-stop  com.jingdong.app.mall",
+        "shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity"
+      ]
+    },
+    {
+      "funName": "点击菜单键",
       "cmdArray": [
         "shell input keyevent 82"
       ]
@@ -49,7 +54,8 @@
       "cmdArray": [
         "uninstall com.jingdong.app.mall"
       ],
-      "type": "adb"
+      "isHide": true
+
     },
     {
       "funName": "清除缓存并重启",
@@ -57,16 +63,17 @@
         "shell pm clear com.jingdong.app.mall",
         "shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity"
       ],
-      "type": "adb"
+      "isHide": true
     },
     {
       "funName": "截屏",
       "cmdArray": [
-        "shell /system/bin/screencap -p /sdcard/screenshot${DEVICENAME}${DATE}.png",
-        "pull /sdcard/screenshot${DEVICENAME}${DATE}.png",
-        "shell rm /sdcard/screenshot${DEVICENAME}${DATE}.png"
+        "shell /system/bin/screencap -p /sdcard/${DEVICE_NAME}${DATE}.png",
+        "pull /sdcard/${DEVICE_NAME}${DATE}.png",
+        "shell rm /sdcard/${DEVICE_NAME}${DATE}.png"
       ],
-      "type": "adb"
+      "不解析":"cmdArray下的命令使用了${DEVICE_NAME}  ${DATE} 执行时会被时间和设备名代替，这俩变量为内置变量"
+
     },
     {
       "funName": "录制视频并保存到电脑",
@@ -75,7 +82,7 @@
         "pull /sdcard/demo.mp4",
         "shell rm /sdcard/demo.mp4"
       ],
-      "type": "adb",
+      "不解析":"cmdArray下的命令使用了${videoTime}执行时会被变量区声明的videoTime代替，可以灵活更改录像时间",
       "isHide": false
     },
     {
@@ -84,12 +91,18 @@
         "root",
         "shell su -c 'am start -W -n com.jingdong.app.mall/com.jd.lib.search.view.Activity.SearchActivity --ei to 4'",
         "shell monkey -p com.jingdong.app.mall --throttle 0 --pct-touch 20 --pct-motion 20 --pct-trackball 20 --pct-majornav 20 --pct-appswitch 20 --ignore-timeouts --ignore-crashes --ignore-security-exceptions --monitor-native-crashes -v -v -v 10"
-      ]
+      ],
+      "isHide": true
     }
   ],
   "variateList": {
-    "adbPath": "/Users/xuekai/Library/Android/sdk/platform-tools/adb",
-    "apkPath": "/Users/xuekai1/projects/idea_workspace/MUtils",
+    "adbPath": "/Users/xuekai1/Library/Android/sdk/platform-tools/adb",
     "videoTime": "10"
+  },
+  "forbidModifyVariateList":["adbPath"],
+  "variateListtemp":{
+    "描述":"该节点不解析，用来写注释，保存一些东西",
+    "uninstallPackageName": "com.example.demo  指定安装apk的包名，默认为JD主站",
+    "apkPath":"/Users/xuekai1/  该例子中variateList节点下没有指定apkPath，默认扫描当前目录下的apk，可通过将此字段放在variateList节点下，用于指定apk目录"
   }
 }

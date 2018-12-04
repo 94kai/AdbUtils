@@ -11,6 +11,7 @@ public class OperationArea extends MJpanel {
     private SelectDeviceArea selectDeviceArea;
     private CustomAdbArea customAdbArea;
     private VariateArea variateArea;
+    private InstallAppArea installAppArea;
 
 
     @Override
@@ -21,7 +22,7 @@ public class OperationArea extends MJpanel {
         selectDeviceArea.setBounds(0, 0, 100, getHeight());
         add(selectDeviceArea);
 
-        InstallAppArea installAppArea = new InstallAppArea();
+        installAppArea = new InstallAppArea();
         installAppArea.setBounds(selectDeviceArea.getRight(), 0, 200, getHeight());
         variateArea = new VariateArea();
         variateArea.setBounds(installAppArea.getRight(), 0, 200, getHeight());
@@ -40,6 +41,7 @@ public class OperationArea extends MJpanel {
         selectDeviceArea.setConfig();
         customAdbArea.setConfig();
         variateArea.setConfig();
+        installAppArea.setConfig();
     }
 
 

@@ -1,5 +1,7 @@
 package com.xk.adbutils.view;
 
+import com.xk.adbutils.ThreadUtils;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,13 +14,13 @@ public class Button extends JButton {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Thread(new Runnable() {
+                ThreadUtils.execute(new Runnable() {
                     @Override
                     public void run() {
                         LogArea.addText(getText(), Color.RED);
                         runnable.run();
                     }
-                }).start();
+                });
             }
         });
 

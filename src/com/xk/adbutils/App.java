@@ -45,5 +45,6 @@ public class App extends JFrame {
         } catch (Exception e) {
             LogArea.addText(Constant.help, Color.red);
         }
+        LogArea.addText(Constant.help, Color.BLUE);
     }
 }
