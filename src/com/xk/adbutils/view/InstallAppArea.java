@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -108,11 +110,27 @@ public class InstallAppArea extends MJpanel {
             String absolutePath = customApkPathParent.getAbsolutePath();
             File file = new File(absolutePath);
             File[] files = file.listFiles();
+            Arrays.sort(files, new Comparator<File>() {
+                @Override
+                public int compare(File file, File t1) {
+                    //针对jd做特殊的排序处理
+                    if (file.getName().contains("JDMALL-") && t1.getName().contains("JDMALL-")) {
+                        String[] split = file.getName().split("-");
+                        String[] split1 = t1.getName().split("-");
+                        return -split[2].compareTo(split1[2]);
+                    } else if (file.getName().contains("JDMALL-")) {
+                        return -1;
+                    } else if (t1.getName().contains("JDMALL-")) {
+                        return 1;
+                    }
+                    return -file.getName().compareTo(t1.getName());
+                }
+            });
             listFiles = new ArrayList<>();
             DefaultListModel listModel = new DefaultListModel();
             for (File file1 : files) {
                 if (file1.getName().endsWith(".apk")) {
-                    listModel.addElement(file1.getName());
+                    listModel.addElement(file1.getName().replace(".apk", "").replace("JDMALL-", ""));
                     listFiles.add(file1);
                 }
             }
