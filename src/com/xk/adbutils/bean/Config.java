@@ -114,13 +114,4 @@ public class Config {
         }
     }
 
-
-//=========================一些封装的方法
-
-    public String getVariate(String key) {
-        if (variateList != null) {
-            return variateList.get(key);
-        }
-        return null;
-    }
 }

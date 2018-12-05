@@ -54,7 +54,7 @@ public class InstallAppArea extends MJpanel {
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                refreshApks();
+                refreshApks(0);
             }
         });
 
@@ -68,7 +68,8 @@ public class InstallAppArea extends MJpanel {
 
 
         });
-        refreshApks();
+        //第一次延时执行，保证可获取到变量
+        refreshApks(1000);
         btnContainer.add(refresh, gridBagConstraints);
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -100,8 +101,9 @@ public class InstallAppArea extends MJpanel {
     }
 
 
-    public void refreshApks() {
-        ThreadUtils.execute(() -> {
+    public void refreshApks(long delayTime) {
+
+        ThreadUtils.executeDelay(() -> {
             String path = VariateArea.instance.getValue(Constant.KEY_APK_PATH);
             if (path == null || "".equals(path)) {
                 path = "./";
@@ -135,6 +137,6 @@ public class InstallAppArea extends MJpanel {
                 }
             }
             sourceList.setModel(listModel);
-        });
+        },delayTime);
     }
 }

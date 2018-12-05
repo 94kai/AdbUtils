@@ -1,6 +1,7 @@
 package com.xk.adbutils.view;
 
 import com.xk.adbutils.ShellUtils;
+import com.xk.adbutils.ThreadUtils;
 import com.xk.adbutils.bean.Config;
 import com.xk.adbutils.bean.ShellResult;
 
@@ -45,7 +46,7 @@ public class SelectDeviceArea extends MJpanel {
         refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listDevices();
+                listDevices(0);
             }
         });
         add(refresh);
@@ -55,47 +56,53 @@ public class SelectDeviceArea extends MJpanel {
     /**
      * 列出当前连接的设备
      */
-    private void listDevices() {
-        ShellResult result = ShellUtils.listDevices();
-        devicesId = new ArrayList<>();
-        if (result.getResultList() != null) {
-            for (String line : result.getResultList()) {
-                if (line.endsWith("device") && line.contains("\t")) {
-                    String[] deviceId = line.split("\t");
-                    devicesId.add(deviceId[0]);
-                }
-            }
-        }
-        DefaultListModel listModel = new DefaultListModel();
-        listModel.addElement("无");
-        //列表显示的数据源
-        showList = new ArrayList<>();
-        if (config != null) {
-            List<Config.Device> deviceList = config.getDeviceList();
-            for (String deviceId : devicesId) {
-                boolean hasAdd = false;
-                for (Config.Device device : deviceList) {
-                    if (device.getDeviceId().equals(deviceId)) {
-                        showList.add(device.getDeviceName());
-                        hasAdd = true;
-                        break;
+    private void listDevices(long delayTime) {
+        ThreadUtils.executeDelay(new Runnable() {
+            @Override
+            public void run() {
+                ShellResult result = ShellUtils.listDevices();
+                devicesId = new ArrayList<>();
+                if (result.getResultList() != null) {
+                    for (String line : result.getResultList()) {
+                        if (line.endsWith("device") && line.contains("\t")) {
+                            String[] deviceId = line.split("\t");
+                            devicesId.add(deviceId[0]);
+                        }
                     }
                 }
-                if (!hasAdd) {
-                    showList.add(deviceId);
+                DefaultListModel listModel = new DefaultListModel();
+                listModel.addElement("无");
+                //列表显示的数据源
+                showList = new ArrayList<>();
+                if (config != null) {
+                    List<Config.Device> deviceList = config.getDeviceList();
+                    for (String deviceId : devicesId) {
+                        boolean hasAdd = false;
+                        for (Config.Device device : deviceList) {
+                            if (device.getDeviceId().equals(deviceId)) {
+                                showList.add(device.getDeviceName());
+                                hasAdd = true;
+                                break;
+                            }
+                        }
+                        if (!hasAdd) {
+                            showList.add(deviceId);
+                        }
+                    }
+                    for (String showName : showList) {
+                        listModel.addElement(showName);
+                    }
                 }
+                sourceList.setModel(listModel);
             }
-            for (String showName : showList) {
-                listModel.addElement(showName);
-            }
-        }
-        sourceList.setModel(listModel);
+        },delayTime);
+
 
     }
 
     @Override
     protected void onConfigLoaded() {
-        listDevices();
+        listDevices(1000);
     }
 
 

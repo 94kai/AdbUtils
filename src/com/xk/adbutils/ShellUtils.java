@@ -1,9 +1,9 @@
 package com.xk.adbutils;
 
-import com.xk.adbutils.bean.Config;
 import com.xk.adbutils.bean.ShellResult;
 import com.xk.adbutils.view.LogArea;
 import com.xk.adbutils.view.SelectDeviceArea;
+import com.xk.adbutils.view.VariateArea;
 
 import java.awt.Color;
 import java.io.BufferedReader;
@@ -37,7 +37,7 @@ public class ShellUtils {
      */
     private static ShellResult executeShell(String shell, boolean withLog) {
 
-        String adb = Config.instance.getVariate(Constant.KEY_ADB_PATH);
+        String adb = VariateArea.instance.getValue(Constant.KEY_ADB_PATH);
         String shellBlock = SelectDeviceArea.instance.getShellBlock();
         String shellCmd = adb + shellBlock + shell;
         Process process = null;
