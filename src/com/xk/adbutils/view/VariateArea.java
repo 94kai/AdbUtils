@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 /**
  * 设置变量区
  */
-// TODO: by xk 2018/12/2 23:18 支持隐藏某些变量，例如adbPath，基本不会修改，希望隐藏。 问题：取value是根据table的内容取的，隐藏之后，取值会有问题。如果保存到另一个对象中的话，通过工具修改的值还是在table中。
 public class VariateArea extends MJpanel {
 
 
@@ -39,19 +38,8 @@ public class VariateArea extends MJpanel {
     @Override
     protected void onConfigLoaded() {
         Map<String, String> variateList = config.getVariateList();
-        List<String> hideVariateList = config.getForbidModifyVariateList();
         String[] columnName = {"key", "value"};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(columnName, variateList.keySet().size() + 7) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                Object key = getValueAt(row, 0);
-                if (hideVariateList != null && hideVariateList.contains(key)) {
-                    //该行不可编辑
-                    return false;
-                }
-                return true;
-            }
-        };
+        DefaultTableModel defaultTableModel = new DefaultTableModel(columnName, variateList.keySet().size() + 7);
 
         for (String key : variateList.keySet()) {
             Vector<String> data = new Vector<>();

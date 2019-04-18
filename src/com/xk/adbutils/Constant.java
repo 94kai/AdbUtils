@@ -11,16 +11,15 @@ public class Constant {
         try {
             // TODO: by xk 2018/12/3 上午10:59 需要写到包中
             helpInfo = FileUtils.readStringFromRes("helpinfo");
-            example = FileUtils.readStringFromRes("example.json");
+            example = FileUtils.readStringFromRes("config.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public static String help = helpInfo +
-            "\n创建\"config.json\",放置在同级目录下\n\n\n Example\n\n\n"
-            + example;
+    public static String help = helpInfo;
+    public static String configFile = example;
     //variate key adbpath
     public static String KEY_ADB_PATH = "adbPath";
     //variate key apkpath

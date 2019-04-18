@@ -21,12 +21,7 @@ public class ShellUtils {
      * @param shell shell脚本，不包括adb 设备号
      */
     public static void executeShellWithLog(String shell) {
-        ThreadUtils.execute(new Runnable() {
-            @Override
-            public void run() {
-                executeShell(shell, true);
-            }
-        });
+        ThreadUtils.execute(() -> executeShell(shell, true));
     }
 
     /**
@@ -39,7 +34,13 @@ public class ShellUtils {
 
         String adb = VariateArea.instance.getValue(Constant.KEY_ADB_PATH);
         String shellBlock = SelectDeviceArea.instance.getShellBlock();
-        String shellCmd = adb + shellBlock + shell;
+        String shellCmd ;
+        if (shell.startsWith("adb")) {
+            shell = shell.replaceFirst("adb ", "");
+            shellCmd = adb + shellBlock + shell;
+        } else {
+            shellCmd = shell;
+        }
         Process process = null;
         List<String> resultList = new ArrayList<String>();
         List<String> errorResultList = new ArrayList<String>();
@@ -71,7 +72,8 @@ public class ShellUtils {
             errorStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-            LogArea.addText(e.getMessage(), Color.red);
+
+            LogArea.addText(e.toString(), Color.red);
         }
 
         ShellResult shellResult = new ShellResult();
@@ -87,6 +89,6 @@ public class ShellUtils {
      * @return 运行结果
      */
     public static ShellResult listDevices() {
-        return executeShell("devices", false);
+        return executeShell("adb devices", false);
     }
 }

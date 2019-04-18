@@ -20,7 +20,6 @@ public class App extends JFrame {
 
     public App() {
         super("adb工具集");
-
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         setLayout(null);

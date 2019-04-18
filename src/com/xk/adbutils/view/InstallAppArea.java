@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -93,10 +92,10 @@ public class InstallAppArea extends MJpanel {
         if (defaultUninstallPackageName == null || defaultUninstallPackageName.equals("")) {
             defaultUninstallPackageName = Constant.JDPackageName;
         }
-        ShellUtils.executeShellWithLog("uninstall " + defaultUninstallPackageName);
-        ShellUtils.executeShellWithLog("install -r " + file.getAbsolutePath());
+        ShellUtils.executeShellWithLog("adb uninstall " + defaultUninstallPackageName);
+        ShellUtils.executeShellWithLog("adb install -r " + file.getAbsolutePath());
         if (defaultUninstallPackageName.equals(Constant.JDPackageName)) {
-            ShellUtils.executeShellWithLog("shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity");
+            ShellUtils.executeShellWithLog("adb shell am start -n com.jingdong.app.mall/com.jingdong.app.mall.main.MainActivity");
         }
     }
 
@@ -112,21 +111,18 @@ public class InstallAppArea extends MJpanel {
             String absolutePath = customApkPathParent.getAbsolutePath();
             File file = new File(absolutePath);
             File[] files = file.listFiles();
-            Arrays.sort(files, new Comparator<File>() {
-                @Override
-                public int compare(File file, File t1) {
-                    //针对jd做特殊的排序处理
-                    if (file.getName().contains("JDMALL-") && t1.getName().contains("JDMALL-")) {
-                        String[] split = file.getName().split("-");
-                        String[] split1 = t1.getName().split("-");
-                        return -split[2].compareTo(split1[2]);
-                    } else if (file.getName().contains("JDMALL-")) {
-                        return -1;
-                    } else if (t1.getName().contains("JDMALL-")) {
-                        return 1;
-                    }
-                    return -file.getName().compareTo(t1.getName());
+            Arrays.sort(files, (file12, t1) -> {
+                //针对jd做特殊的排序处理
+                if (file12.getName().contains("JDMALL-") && t1.getName().contains("JDMALL-")) {
+                    String[] split = file12.getName().split("-");
+                    String[] split1 = t1.getName().split("-");
+                    return -split[2].compareTo(split1[2]);
+                } else if (file12.getName().contains("JDMALL-")) {
+                    return -1;
+                } else if (t1.getName().contains("JDMALL-")) {
+                    return 1;
                 }
+                return -file12.getName().compareTo(t1.getName());
             });
             listFiles = new ArrayList<>();
             DefaultListModel listModel = new DefaultListModel();

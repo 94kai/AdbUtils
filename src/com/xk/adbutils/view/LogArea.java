@@ -20,6 +20,10 @@ public class LogArea extends JScrollPane {
     public static LogArea instance;
     private final JTextPane logPan;
 
+    /**
+     * 存储上一条日志，用来去重
+     */
+    private static String logTemp;
     public LogArea() throws HeadlessException {
         super(new JTextPane());
         instance = this;
@@ -31,8 +35,13 @@ public class LogArea extends JScrollPane {
         addTextWithDate(text,foreground,new Date());
     }
 
+
     public static void addTextWithDate(String text, Color foreground, Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");
+        if (text.equals(logTemp)) {
+            //去重
+            return;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm:ss ");
         String string = simpleDateFormat.format(date) + text + "\n\n";
         StyledDocument d = instance.logPan.getStyledDocument();
         SimpleAttributeSet attr = new SimpleAttributeSet();
@@ -44,8 +53,7 @@ public class LogArea extends JScrollPane {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
-
-
+        logTemp = text;
     }
 
     public static void clear() {

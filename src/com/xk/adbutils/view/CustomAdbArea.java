@@ -18,12 +18,12 @@ import javax.swing.JButton;
  * 自定义adb操作区
  */
 public class CustomAdbArea extends MJpanel {
-    private String internalVariate_Date = "DATE";
-    private String internalVariate_DeviceName = "DEVICE_NAME";
+    private final String DATE = "DATE";
+    private final String DEVICE_NAME = "DEVICE_NAME";
 
     @Override
     protected void init() {
-        setLayout(new FlowLayout());
+        setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
     }
 
     @Override
@@ -34,16 +34,13 @@ public class CustomAdbArea extends MJpanel {
             if (adbCmd.isHide()) {
                 continue;
             }
-            JButton jButton = new Button(adbCmd.getFunName(), new Runnable() {
-                @Override
-                public void run() {
-                    Date date = new Date();
-                    List<String> cmdArray = adbCmd.getCmdArray();
-                    for (String cmd : cmdArray) {
-                        cmd = replaceInternalVariate(cmd, date);
-                        cmd = replaceVariate(cmd);
-                        ShellUtils.executeShellWithLog(cmd);
-                    }
+            JButton jButton = new Button(adbCmd.getFunName(), () -> {
+                Date date = new Date();
+                List<String> cmdArray = adbCmd.getCmdArray();
+                for (String cmd : cmdArray) {
+                    cmd = replaceInternalVariate(cmd, date);
+                    cmd = replaceVariate(cmd);
+                    ShellUtils.executeShellWithLog(cmd);
                 }
             });
             add(jButton);
@@ -60,21 +57,17 @@ public class CustomAdbArea extends MJpanel {
      * @return
      */
     private String replaceInternalVariate(String cmd, Date date) {
-        String keywordDate = "${" + internalVariate_Date + "}";
+        String keywordDate = "${" + DATE + "}";
         SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss");
         String time = format.format(date);
         if (cmd.contains(keywordDate)) {
             cmd = cmd.replace(keywordDate, time + "");
         }
-
-
-        String keywordDeviceName = "${" + internalVariate_DeviceName + "}";
-        String deviceName=SelectDeviceArea.instance.getSelectDeviceName();
+        String keywordDeviceName = "${" + DEVICE_NAME + "}";
+        String deviceName = SelectDeviceArea.instance.getSelectDeviceName();
         if (cmd.contains(keywordDeviceName)) {
             cmd = cmd.replace(keywordDeviceName, deviceName);
         }
-
-
         return cmd;
     }
 
@@ -101,23 +94,21 @@ public class CustomAdbArea extends MJpanel {
     }
 
     private void initHelpButton() {
-        JButton jButton = new Button("帮助", new Runnable() {
-            @Override
-            public void run() {
-                LogArea.addText(Constant.help, Color.BLUE);
-            }
-        });
+        JButton jButton = new Button("帮助", () -> LogArea.addText(Constant.help, Color.BLUE));
         add(jButton);
+        JButton jButton1 = new Button("获取配置文件", () -> {
+            LogArea.clear();
+            LogArea.addText(Constant.configFile, Color.BLUE);
+        });
+        jButton.setForeground(Color.RED);
+        jButton1.setForeground(Color.RED);
+        add(jButton1);
     }
 
 
     private void initClearButton() {
-        JButton jButton = new Button("清空日志", new Runnable() {
-            @Override
-            public void run() {
-                LogArea.clear();
-            }
-        });
+        JButton jButton = new Button("清空日志", LogArea::clear);
+        jButton.setForeground(Color.RED);
         add(jButton);
     }
 

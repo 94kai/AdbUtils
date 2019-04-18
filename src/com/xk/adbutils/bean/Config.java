@@ -8,7 +8,6 @@ public class Config {
     public static Config instance;
     private List<Device> deviceList;
     private List<AdbCmd> adbCmdList;
-    private List<String> forbidModifyVariateList;
     private Map<String, String> variateList;
 
 
@@ -26,13 +25,6 @@ public class Config {
         return instance;
     }
 
-    public List<String> getForbidModifyVariateList() {
-        return forbidModifyVariateList;
-    }
-
-    public void setForbidModifyVariateList(List<String> forbidModifyVariateList) {
-        this.forbidModifyVariateList = forbidModifyVariateList;
-    }
 
     public void setVariateList(Map<String, String> variateList) {
         this.variateList = variateList;
@@ -78,7 +70,6 @@ public class Config {
     public class AdbCmd {
         private String funName;
         private List<String> cmdArray;
-        private String type;
         private boolean isHide;
 
         public boolean isHide() {
@@ -103,14 +94,6 @@ public class Config {
 
         public void setCmdArray(List<String> cmdArray) {
             this.cmdArray = cmdArray;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
         }
     }
 
