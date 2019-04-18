@@ -19,6 +19,7 @@ public class Constant {
 
 
     public static String help = helpInfo;
+    public static String helpError = helpInfo + example;
     public static String configFile = example;
     //variate key adbpath
     public static String KEY_ADB_PATH = "adbPath";

@@ -42,8 +42,7 @@ public class App extends JFrame {
             Config.setInstance(config);
             operationArea.setConfig();
         } catch (Exception e) {
-            LogArea.addText(Constant.help, Color.red);
+            LogArea.addText(Constant.helpError, Color.red);
         }
-        LogArea.addText(Constant.help, Color.BLUE);
     }
 }

@@ -9,7 +9,7 @@ public class OperationArea extends MJpanel {
 
 
     private SelectDeviceArea selectDeviceArea;
-    private CustomAdbArea customAdbArea;
+    public CustomAdbArea customAdbArea;
     private VariateArea variateArea;
     private InstallAppArea installAppArea;
 
