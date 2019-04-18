@@ -24,7 +24,7 @@ public class FileUtils {
             StringBuilder buffer = new StringBuilder();
 
             String line; // 用来保存每行读取的内容
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
             line = reader.readLine(); // 读取第一行
 
             while (line != null) { // 如果 line 为空说明读完了
