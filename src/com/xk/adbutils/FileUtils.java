@@ -3,17 +3,22 @@ package com.xk.adbutils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class FileUtils {
 
 
-    public static String readStringFromFile(String path) throws Exception {
-        File file = new File(path);
-        if (file.exists()) {
-            InputStream is = new FileInputStream(path);
-            return readStringFromInputStream(is);
+    public static String readStringFromFile(String path) {
+        try {
+            File file = new File(path);
+            if (file.exists()) {
+                InputStream is = new FileInputStream(path);
+                return readStringFromInputStream(is);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
         return "";
     }

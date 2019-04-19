@@ -1,5 +1,7 @@
 package com.xk.adbutils.view;
 
+import com.xk.adbutils.ThreadUtils;
+
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
@@ -32,9 +34,10 @@ public class LogArea extends JScrollPane {
 
 
     public static void addText(String text, Color foreground) {
-        addTextWithDate(text,foreground,new Date());
+        ThreadUtils.executeDelay(() -> {
+            addTextWithDate(text,foreground,new Date());
+        },0);
     }
-
 
     public static void addTextWithDate(String text, Color foreground, Date date) {
         if (text.equals(logTemp)) {
