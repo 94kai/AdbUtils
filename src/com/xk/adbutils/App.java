@@ -52,6 +52,8 @@ public class App extends JFrame {
         }
         if (loadLocal) {
             LogArea.addText("\n没有在小工具当前目录找到config.json文件，或配置有误。已使用默认配置。\n\n如需使用adb命令，需修改变量区adbPath。\n\n建议点击获取配置文件按钮，获取配置文件，命名为config.json存放在小工具同级目录。\n\n详细使用说明请点帮助", Color.red);
+        } else {
+            LogArea.addText("\n加载config.json成功", Color.red);
         }
         Config.setInstance(config);
         operationArea.setConfig();
