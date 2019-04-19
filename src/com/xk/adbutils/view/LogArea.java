@@ -52,7 +52,7 @@ public class LogArea extends JScrollPane {
         StyleConstants.setForeground(attr, foreground);
 //        StyleConstants.setBackground(attr, background);
         try {
-            d.insertString(instance.logPan.getText().length(), string, attr);
+            d.insertString(instance.logPan.getStyledDocument().getLength(), string, attr);
             instance.getVerticalScrollBar().setValue(instance.getVerticalScrollBar().getMaximum());
         } catch (BadLocationException e) {
             e.printStackTrace();
