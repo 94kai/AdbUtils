@@ -46,8 +46,10 @@ public class App extends JFrame {
             }
             config = JSON.parseObject(json, Config.class);
         } catch (Exception e) {
+            e.printStackTrace();
             json = Constant.configFile;
             config = JSON.parseObject(json, Config.class);
+            LogArea.addText("\n"+e, Color.red);
             loadLocal = true;
         }
         if (loadLocal) {
