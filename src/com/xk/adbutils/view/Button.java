@@ -10,7 +10,6 @@ public class Button extends JButton {
 
     public Button(String text, Runnable runnable) {
         setText(text);
-
         addActionListener(e -> ThreadUtils.execute(() -> {
             LogArea.addText(getText(), Color.RED);
             runnable.run();

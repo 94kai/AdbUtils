@@ -72,7 +72,6 @@ public class ShellUtils {
             errorStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-
             LogArea.addText(e.toString(), Color.red);
         }
 

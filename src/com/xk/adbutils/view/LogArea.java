@@ -1,7 +1,5 @@
 package com.xk.adbutils.view;
 
-import com.xk.adbutils.ThreadUtils;
-
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
@@ -26,20 +24,23 @@ public class LogArea extends JScrollPane {
      * 存储上一条日志，用来去重
      */
     private static String logTemp;
+
     public LogArea() throws HeadlessException {
         super(new JTextPane());
         instance = this;
         logPan = (JTextPane) getViewport().getView();
     }
 
-
     public static void addText(String text, Color foreground) {
-        ThreadUtils.executeDelay(() -> {
-            addTextWithDate(text,foreground,new Date());
-        },0);
+        addTextWithDate(text, foreground, new Date());
     }
 
     public static void addTextWithDate(String text, Color foreground, Date date) {
+        if (text.contains("%]") && text.contains("[")) {//针对安装app日志优化。
+            if (text.contains("2%]")||text.contains("4%]")||text.contains("6%]")||text.contains("7%]")) {
+                    return;
+            }
+        }
         if (text.equals(logTemp)) {
             //去重
             return;
